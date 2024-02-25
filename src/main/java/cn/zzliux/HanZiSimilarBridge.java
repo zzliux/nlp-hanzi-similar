@@ -19,6 +19,8 @@ public class HanZiSimilarBridge {
         );
         System.out.println(b.similarity("防御", "告死灯灯"));
         System.out.println(b.similarity("人鬼情未了", "入免晴末子"));
+        System.out.println(b.similarity("金币", "全部"));
+        System.out.println(b.similarity("金", "全"));
         System.out.println(b.similarity("未", "末"));
     }
 
@@ -34,7 +36,7 @@ public class HanZiSimilarBridge {
                         userDefineData
                 )
                 .bihuashuRate(2)
-                .bushouRate(2)
+                .bushouRate(6)
                 .jiegouRate(10)
                 .sijiaoRate(8);
     }
