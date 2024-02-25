@@ -86,42 +86,6 @@ public class HanziSimilarContext implements IHanziSimilarContext {
      */
     private IHanziSimilar sijiaoSimilar;
 
-    /**
-     * 拼音占比
-     */
-    private double pinyinRate;
-
-    /**
-     * 拼音相似度实现
-     */
-    private IHanziSimilar pinyinSimilar;
-
-    /**
-     * 拆字相似度计算
-     */
-    private IHanziSimilar chaiziSimiar;
-
-    /**
-     * 拆字比例
-     */
-    private double chaiziRate;
-
-    /**
-     * 相似度列表
-     * @since 1.3.0
-     */
-    private IHanziSimilarListData hanziSimilarListData;
-
-    @Override
-    public IHanziSimilarListData hanziSimilarListData() {
-        return hanziSimilarListData;
-    }
-
-    public HanziSimilarContext hanziSimilarListData(IHanziSimilarListData hanziSimilarListData) {
-        this.hanziSimilarListData = hanziSimilarListData;
-        return this;
-    }
-
     @Override
     public String charOne() {
         return charOne;
@@ -269,46 +233,6 @@ public class HanziSimilarContext implements IHanziSimilarContext {
 
     public HanziSimilarContext sijiaoSimilar(IHanziSimilar sijiaoSimilar) {
         this.sijiaoSimilar = sijiaoSimilar;
-        return this;
-    }
-
-    @Override
-    public double pinyinRate() {
-        return pinyinRate;
-    }
-
-    public HanziSimilarContext pinyinRate(double pinyinRate) {
-        this.pinyinRate = pinyinRate;
-        return this;
-    }
-
-    @Override
-    public IHanziSimilar pinyinSimilar() {
-        return pinyinSimilar;
-    }
-
-    public HanziSimilarContext pinyinSimilar(IHanziSimilar pinyinSimilar) {
-        this.pinyinSimilar = pinyinSimilar;
-        return this;
-    }
-
-    @Override
-    public IHanziSimilar chaiziSimiar() {
-        return chaiziSimiar;
-    }
-
-    public HanziSimilarContext chaiziSimiar(IHanziSimilar chaiziSimiar) {
-        this.chaiziSimiar = chaiziSimiar;
-        return this;
-    }
-
-    @Override
-    public double chaiziRate() {
-        return chaiziRate;
-    }
-
-    public HanziSimilarContext chaiziRate(double chaiziRate) {
-        this.chaiziRate = chaiziRate;
         return this;
     }
 }

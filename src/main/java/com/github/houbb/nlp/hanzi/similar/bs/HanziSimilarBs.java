@@ -2,21 +2,15 @@ package com.github.houbb.nlp.hanzi.similar.bs;
 
 import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.heaven.util.common.ArgUtil;
-import com.github.houbb.heaven.util.util.CollectionUtil;
 import com.github.houbb.nlp.hanzi.similar.api.IHanziData;
 import com.github.houbb.nlp.hanzi.similar.api.IHanziSimilar;
 import com.github.houbb.nlp.hanzi.similar.api.IHanziSimilarContext;
-import com.github.houbb.nlp.hanzi.similar.api.IHanziSimilarListData;
+import com.github.houbb.nlp.hanzi.similar.constant.HanziSimilarDataConst;
 import com.github.houbb.nlp.hanzi.similar.constant.HanziSimilarRateConst;
 import com.github.houbb.nlp.hanzi.similar.core.HanziSimilar;
-import com.github.houbb.nlp.hanzi.similar.core.HanziSimilarListDatas;
 import com.github.houbb.nlp.hanzi.similar.support.data.HanziSimilarDatas;
 import com.github.houbb.nlp.hanzi.similar.support.similar.HanziSimilarContext;
 import com.github.houbb.nlp.hanzi.similar.support.similar.HanziSimilars;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * 引导类
@@ -26,10 +20,16 @@ import java.util.List;
  */
 public final class HanziSimilarBs {
 
-    private HanziSimilarBs(){}
+    private HanziSimilarBs(String bihuashuData, String bushouData, String jiegouData, String sijiaoData, String userDefinData) {
+        this.bihuashuData = HanziSimilarDatas.bihuashu(bihuashuData);
+        this.bushouData = HanziSimilarDatas.bushou(bushouData);
+        this.jiegouData = HanziSimilarDatas.jiegou(jiegouData);
+        this.sijiaoData = HanziSimilarDatas.sijiao(sijiaoData);
+        this.userDefineData = HanziSimilarDatas.userDefine(userDefinData);
+    }
 
-    public static HanziSimilarBs newInstance() {
-        return new HanziSimilarBs();
+    public static HanziSimilarBs newInstance(String bihuashuData, String bushouData, String jiegouData, String sijiaoData, String userDefinData) {
+        return new HanziSimilarBs(bihuashuData, bushouData, jiegouData, sijiaoData, userDefinData);
     }
 
     /**
@@ -40,7 +40,7 @@ public final class HanziSimilarBs {
     /**
      * 笔画数数据
      */
-    private IHanziData<Integer> bihuashuData = HanziSimilarDatas.bihuashu();
+    private IHanziData<Integer> bihuashuData;
 
     /**
      * 笔画数相似度实现
@@ -55,7 +55,7 @@ public final class HanziSimilarBs {
     /**
      * 结构数据
      */
-    private IHanziData<String> jiegouData = HanziSimilarDatas.jiegou();
+    private IHanziData<String> jiegouData;
 
     /**
      * 结构相似度实现
@@ -70,7 +70,7 @@ public final class HanziSimilarBs {
     /**
      * 部首数据
      */
-    private IHanziData<String> bushouData = HanziSimilarDatas.bushou();
+    private IHanziData<String> bushouData;
 
     /**
      * 部首相似度实现
@@ -85,36 +85,17 @@ public final class HanziSimilarBs {
     /**
      * 四角编码数据
      */
-    private IHanziData<String> sijiaoData = HanziSimilarDatas.sijiao();
+    private IHanziData<String> sijiaoData;
 
     /**
      * 四角编码相似度实现
      */
     private IHanziSimilar sijiaoSimilar = HanziSimilars.sijiao();
 
-    /**
-     * 拼音占比
-     */
-    private double pinyinRate = HanziSimilarRateConst.PINYIN;
-
-    /**
-     * 拼音相似度实现
-     */
-    private IHanziSimilar pinyinSimilar = HanziSimilars.pinyin();
-
-    /**
-     * 拆字占比
-     */
-    private double chaiziRate = HanziSimilarRateConst.CHAIZI;
-
-    /**
-     * 拆字相似度实现
-     * @since 1.1.0
-     */
-    private IHanziSimilar chaiziSimilar = HanziSimilars.chaizi();
 
     /**
      * 核心实现
+     *
      * @since 1.1.0
      */
     private IHanziSimilar hanziSimilar = Instances.singleton(HanziSimilar.class);
@@ -122,20 +103,8 @@ public final class HanziSimilarBs {
     /**
      * 用户自定义的数据
      */
-    private IHanziData<Double> userDefineData = HanziSimilarDatas.userDefine();
+    private IHanziData<Double> userDefineData;
 
-    /**
-     * 相似列表数据
-     * @since 1.3.0
-     */
-    private IHanziSimilarListData hanziSimilarListData = HanziSimilarListDatas.defaults();
-
-    public HanziSimilarBs hanziSimilarListData(IHanziSimilarListData hanziSimilarListData) {
-        ArgUtil.notNull(hanziSimilarListData, "hanziSimilarListData");
-
-        this.hanziSimilarListData = hanziSimilarListData;
-        return this;
-    }
 
     public HanziSimilarBs bihuashuRate(double bihuashuRate) {
         ArgUtil.notNegative(bihuashuRate, "bihuashuRate");
@@ -203,28 +172,6 @@ public final class HanziSimilarBs {
         return this;
     }
 
-    public HanziSimilarBs pinyinRate(double pinyinRate) {
-        ArgUtil.notNegative(pinyinRate, "pinyinRate");
-
-        this.pinyinRate = pinyinRate;
-        return this;
-    }
-
-    public HanziSimilarBs pinyinSimilar(IHanziSimilar pinyinSimilar) {
-        this.pinyinSimilar = pinyinSimilar;
-        return this;
-    }
-
-    public HanziSimilarBs chaiziRate(double chaiziRate) {
-        this.chaiziRate = chaiziRate;
-        return this;
-    }
-
-    public HanziSimilarBs chaiziSimilar(IHanziSimilar chaiziSimilar) {
-        this.chaiziSimilar = chaiziSimilar;
-        return this;
-    }
-
     public HanziSimilarBs hanziSimilar(IHanziSimilar hanziSimilar) {
         this.hanziSimilar = hanziSimilar;
         return this;
@@ -237,6 +184,7 @@ public final class HanziSimilarBs {
 
     /**
      * 相似度
+     *
      * @param one 第一个
      * @param two 第二个
      * @return 结果
@@ -246,36 +194,10 @@ public final class HanziSimilarBs {
         return hanziSimilar.similar(context);
     }
 
-    /**
-     * 相似的列表数据
-     * @param word 单词
-     * @param limit 限制
-     * @return 结果
-     * @since 1.3.0
-     */
-    public List<String> similarList(char word,
-                                    int limit) {
-        ArgUtil.notNegative(limit, "limit");
-
-        String wordStr = String.valueOf(word);
-
-        List<String> mapList = hanziSimilarListData.similarList(wordStr);
-        if(CollectionUtil.isEmpty(mapList)) {
-            return Collections.emptyList();
-        }
-        int size = Math.min(limit, mapList.size());
-        // 返回新的列表，防御编程。
-        List<String> resultList = new ArrayList<>(size);
-        for(int i = 0; i < size; i++) {
-            resultList.add(mapList.get(i));
-        }
-        return resultList;
-    }
-
     private IHanziSimilarContext buildContext(char one, char two) {
         HanziSimilarContext context = new HanziSimilarContext();
-        context.charOne(one+"")
-                .charTwo(two+"")
+        context.charOne(one + "")
+                .charTwo(two + "")
                 .userDefineData(userDefineData)
                 .bihuashuData(bihuashuData)
                 .bihuashuSimilar(bihuashuSimilar)
@@ -288,11 +210,7 @@ public final class HanziSimilarBs {
                 .bushouRate(bushouRate)
                 .sijiaoData(sijiaoData)
                 .sijiaoRate(sijiaoRate)
-                .sijiaoSimilar(sijiaoSimilar)
-                .pinyinRate(pinyinRate)
-                .pinyinSimilar(pinyinSimilar)
-                .chaiziRate(chaiziRate)
-                .chaiziSimiar(chaiziSimilar);
+                .sijiaoSimilar(sijiaoSimilar);
 
         return context;
     }

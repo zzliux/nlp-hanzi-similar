@@ -28,8 +28,6 @@
         <!--============================== INTER ==============================-->
         <plugin.gen.version>1.0.6</plugin.gen.version>
         <heaven.version>0.2.0</heaven.version>
-        <pinyin.version>0.4.0</pinyin.version>
-        <nlp-chaizi.version>1.1.0</nlp-chaizi.version>
 
         <!--============================== OTHER ==============================-->
         <junit.version>4.13.1</junit.version>
@@ -44,16 +42,6 @@
                 <groupId>com.github.houbb</groupId>
                 <artifactId>heaven</artifactId>
                 <version>${heaven.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.houbb</groupId>
-                <artifactId>pinyin</artifactId>
-                <version>${pinyin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.houbb</groupId>
-                <artifactId>nlp-chaizi</artifactId>
-                <version>${nlp-chaizi.version}</version>
             </dependency>
 
             <!--============================== OTHER ==============================-->
@@ -82,16 +70,6 @@
             <artifactId>heaven</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.github.houbb</groupId>
-            <artifactId>pinyin</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.houbb</groupId>
-            <artifactId>nlp-chaizi</artifactId>
-        </dependency>
-
         <!--============================== OTHER ==============================-->
         <dependency>
             <groupId>junit</groupId>
@@ -106,24 +84,42 @@
 
     <build>
         <plugins>
-            <!--compiler plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${plugin.compiler.version}</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <compilerArgument>-proc:none</compilerArgument>
+                    <source>7</source>
+                    <target>7</target>
                 </configuration>
             </plugin>
-
-            <!-- Javadoc -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${plugin.maven-javadoc-plugin.version}</version>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptorRefs>
+                        <!--设置将所有的依赖打进jar包中-->
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <!-- 此处指定main方法入口的class -->
+                            <mainClass>cn.zzliux.HanZiSimilarBridge</mainClass>
+                        </manifest>
+                    </archive>
+                    <!--指定打出的jar包输出目录-->
+                    <outputDirectory>target</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <!--将assembly插件绑定到package上，到时只需要双击package指令即可-->
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

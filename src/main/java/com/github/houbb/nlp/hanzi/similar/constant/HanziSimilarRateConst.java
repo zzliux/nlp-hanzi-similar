@@ -34,10 +34,4 @@ public class HanziSimilarRateConst {
      * 笔画数
      */
     public static final double BIAHUASHU = 2.0;
-
-    /**
-     * 拼音
-     */
-    public static final double PINYIN = 1;
-
 }

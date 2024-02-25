@@ -35,13 +35,6 @@ public final class HanziSimilars {
         return Instances.singleton(JiegouSimilar.class);
     }
 
-    /**
-     * 拼音
-     * @return 实现
-     */
-    public static IHanziSimilar pinyin() {
-        return Instances.singleton(PinyinSimilar.class);
-    }
 
     /**
      * 四角
@@ -50,14 +43,4 @@ public final class HanziSimilars {
     public static IHanziSimilar sijiao() {
         return Instances.singleton(SijiaoSimilar.class);
     }
-
-    /**
-     * 拆字
-     * @return 实现
-     * @since 1.1.0
-     */
-    public static IHanziSimilar chaizi() {
-        return Instances.singleton(ChaiziSimilar.class);
-    }
-
 }

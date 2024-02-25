@@ -69,30 +69,6 @@ public interface IHanziSimilarContext {
     double sijiaoRate();
 
     /**
-     * 汉字拼音相似度
-     * @return 相似度
-     */
-    IHanziSimilar pinyinSimilar();
-
-    /**
-     * 拼音占比权重
-     * @return 权重
-     */
-    double pinyinRate();
-
-    /**
-     * 拆字相似度计算
-     * @return 相似度计算
-     */
-    IHanziSimilar chaiziSimiar();
-
-    /**
-     * 拆字比例
-     * @return 比例
-     */
-    double chaiziRate();
-
-    /**
      * 用户自定义 数据
      * @return 数据
      */
@@ -121,12 +97,4 @@ public interface IHanziSimilarContext {
      * @return 数据
      */
     IHanziData<String> sijiaoData();
-
-    /**
-     * 汉字相似度列表
-     * @return 列表
-     * @since 1.3.0
-     */
-    IHanziSimilarListData hanziSimilarListData();
-
 }

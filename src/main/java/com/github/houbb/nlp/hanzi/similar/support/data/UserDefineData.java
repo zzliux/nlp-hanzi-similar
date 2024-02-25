@@ -5,26 +5,30 @@ import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.nlp.hanzi.similar.api.IHanziData;
 import com.github.houbb.nlp.hanzi.similar.constant.HanziSimilarDataConst;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * 用户自定义数据
+ *
  * @author binbin.hou
  * @since 1.0.0
  */
 public class UserDefineData implements IHanziData<Double> {
 
-    private static final Map<String, Double> MAP;
+    private Map<String, Double> MAP;
 
-    static {
-        List<String> lines = StreamUtil.readAllLines(HanziSimilarDataConst.USER_DEFINE);
+    UserDefineData(String data) {
+        List<String> lines = Arrays.asList(data.split("\\r?\\n"));
         MAP = new HashMap<>(lines.size());
 
-        for(String line : lines) {
+        for (String line : lines) {
             String[] strings = line.split(StringUtil.BLANK);
-            MAP.put(strings[0], Double.valueOf(strings[1]));
+            if (strings.length > 1) {
+                MAP.put(strings[0], Double.valueOf(strings[1]));
+            }
         }
     }
 

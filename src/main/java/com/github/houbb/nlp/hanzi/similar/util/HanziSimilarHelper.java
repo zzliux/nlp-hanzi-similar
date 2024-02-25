@@ -1,6 +1,7 @@
 package com.github.houbb.nlp.hanzi.similar.util;
 
 import com.github.houbb.nlp.hanzi.similar.bs.HanziSimilarBs;
+import com.github.houbb.nlp.hanzi.similar.constant.HanziSimilarDataConst;
 
 import java.util.List;
 
@@ -21,28 +22,11 @@ public final class HanziSimilarHelper {
      * @return 结果
      */
     public static double similar(char hanziOne, char hanziTwo) {
-        return HanziSimilarBs.newInstance().similar(hanziOne, hanziTwo);
+        return HanziSimilarBs.newInstance(
+                HanziSimilarDataConst.BIAHUASHU,
+                HanziSimilarDataConst.BUSHOU,
+                HanziSimilarDataConst.JIEGOU,
+                HanziSimilarDataConst.SIJIAO,
+                HanziSimilarDataConst.USER_DEFINE).similar(hanziOne, hanziTwo);
     }
-
-    /**
-     * 相似的列表
-     * @param hanziOne 汉字一
-     * @param limit 大小
-     * @return 结果
-     * @since 1.3.0
-     */
-    public static List<String> similarList(char hanziOne, int limit) {
-        return HanziSimilarBs.newInstance().similarList(hanziOne, limit);
-    }
-
-    /**
-     * 相似的列表
-     * @param hanziOne 汉字一
-     * @return 结果
-     * @since 1.3.0
-     */
-    public static List<String> similarList(char hanziOne) {
-        return similarList(hanziOne, 10);
-    }
-
 }

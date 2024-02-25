@@ -1,29 +1,53 @@
 package cn.zzliux;
 
+import com.github.houbb.heaven.util.io.StreamUtil;
 import com.github.houbb.nlp.hanzi.similar.bs.HanziSimilarBs;
-import com.github.houbb.nlp.hanzi.similar.util.HanziSimilarHelper;
+import com.github.houbb.nlp.hanzi.similar.constant.HanziSimilarDataConst;
 
 public class HanZiSimilarBridge {
 
-    private static final HanziSimilarBs helper = HanziSimilarBs.newInstance()
-            .jiegouRate(10)
-            .sijiaoRate(8)
-            .bushouRate(2)
-            .bihuashuRate(2)
-            .chaiziRate(2);
+    private HanziSimilarBs helper;
 
-//    public static void main(String[] args) {
-//        System.out.println(similarity("人鬼情未了", "入免情末了"));
-//    }
+    public static void main(String[] args) {
+        HanZiSimilarBridge b = new HanZiSimilarBridge();
+        b.init(
+                StreamUtil.getFileContent(HanziSimilarDataConst.BIAHUASHU),
+                StreamUtil.getFileContent(HanziSimilarDataConst.BUSHOU),
+                StreamUtil.getFileContent(HanziSimilarDataConst.JIEGOU),
+                StreamUtil.getFileContent(HanziSimilarDataConst.SIJIAO),
+                StreamUtil.getFileContent(HanziSimilarDataConst.USER_DEFINE)
+        );
+        System.out.println(b.similarity("防御", "告死灯灯"));
+        System.out.println(b.similarity("人鬼情未了", "入免晴末子"));
+        System.out.println(b.similarity("未", "末"));
+    }
+
+    public HanZiSimilarBridge() {
+    }
+
+    public void init(String bihuashuData, String bushouPath, String jiegouData, String sijiaoData, String userDefineData) {
+        helper = HanziSimilarBs.newInstance(
+                        bihuashuData,
+                        bushouPath,
+                        jiegouData,
+                        sijiaoData,
+                        userDefineData
+                )
+                .bihuashuRate(2)
+                .bushouRate(2)
+                .jiegouRate(10)
+                .sijiaoRate(8);
+    }
 
 
     /**
      * 字符串相似度比较，基于编辑距离计算，不相同的字符使用字形相似度计算
+     *
      * @param str1 字符串1
      * @param str2 字符串2
      * @return 返回两字符串的相似度
      */
-    public static double similarity(String str1, String str2) {
+    public double similarity(String str1, String str2) {
         int m = str1.length();
         int n = str2.length();
 

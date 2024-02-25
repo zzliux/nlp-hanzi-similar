@@ -53,21 +53,12 @@ public class HanziSimilar implements IHanziSimilar {
         IHanziSimilar biahuashuSimilar = context.bihuashuSimilar();
         double bihuashuScore = biahuashuSimilar.similar(context);
 
-        //3.5 拼音
-        IHanziSimilar pinyinSimilar = context.pinyinSimilar();
-        double pinyinScore = pinyinSimilar.similar(context);
-
-        //3.6 拆字
-        IHanziSimilar chaiziSimiar = context.chaiziSimiar();
-        double chaiziScore = chaiziSimiar.similar(context);
 
         //4. 计算总分
         double totalScore = sijiaoScore
                 + jiegouScore
                 + bushouScore
-                + bihuashuScore
-                + pinyinScore
-                + chaiziScore;
+                + bihuashuScore;
         //4.1 避免浮点数比较问题
         if(totalScore <= 0) {
             return 0;
@@ -77,9 +68,7 @@ public class HanziSimilar implements IHanziSimilar {
         double limitScore = context.sijiaoRate()
                 + context.jiegouRate()
                 + context.bushouRate()
-                + context.bihuashuRate()
-                + context.pinyinRate()
-                + context.chaiziRate();
+                + context.bihuashuRate();
 
         return totalScore / limitScore;
     }
