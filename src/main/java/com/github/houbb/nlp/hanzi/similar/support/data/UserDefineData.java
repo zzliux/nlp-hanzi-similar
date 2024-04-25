@@ -27,7 +27,10 @@ public class UserDefineData implements IHanziData<Double> {
         for (String line : lines) {
             String[] strings = line.split(StringUtil.BLANK);
             if (strings.length > 1) {
-                MAP.put(strings[0], Double.valueOf(strings[1]));
+                if (strings[0].length() == 2) {
+                    MAP.put(strings[0], Double.valueOf(strings[1]));
+                    MAP.put(new StringBuffer(strings[0]).reverse().toString(), Double.valueOf(strings[1]));
+                }
             }
         }
     }

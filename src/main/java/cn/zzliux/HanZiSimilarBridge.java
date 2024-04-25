@@ -17,11 +17,13 @@ public class HanZiSimilarBridge {
                 StreamUtil.getFileContent(HanziSimilarDataConst.SIJIAO),
                 StreamUtil.getFileContent(HanziSimilarDataConst.USER_DEFINE)
         );
-        System.out.println(b.similarity("防御", "告死灯灯"));
-        System.out.println(b.similarity("人鬼情未了", "入免晴末子"));
-        System.out.println(b.similarity("金币", "全部"));
-        System.out.println(b.similarity("金", "全"));
-        System.out.println(b.similarity("未", "末"));
+        System.out.println("防御,坊御: " + b.similarity("防御", "坊御"));
+        System.out.println("人鬼情未了,入免晴末子: " + b.similarity("人鬼情未了", "入免晴末子"));
+        System.out.println("金币,全部: " + b.similarity("金币", "全部"));
+        System.out.println("金,全: "  + b.similarity("金", "全"));
+        System.out.println("沒有,没有: " + b.similarity("沒有", "没有"));
+        System.out.println("戰鬥,战斗: " + b.similarity("戰鬥", "战斗"));
+        System.out.println("abc,qbc" + b.similarity("abc", "qbc"));
     }
 
     public HanZiSimilarBridge() {
